@@ -1,0 +1,21 @@
+@import "tailwindcss";
+@import "@fontsource/playfair-display/400.css";
+@import "@fontsource/playfair-display/700.css";
+@import "@fontsource/inter/400.css";
+@import "@fontsource/inter/500.css";
+@import "@fontsource/inter/600.css";
+
+@theme {
+  --color-surface: #F7F6F3;
+  --color-text-primary: #111111;
+  --color-accent: #8B0000;
+  --color-accent-hover: #6B0000;
+  --color-accent-light: #F5E6E6;
+  --color-success: #2D6A4F;
+  --color-success-light: #E9F5EE;
+  --color-warning: #92400E;
+  --color-warning-light: #FEF3C7;
+  --color-border: #E5E2DB;
+  --font-serif: "Playfair Display", Georgia, serif;
+  --font-sans: "Inter", system-ui, sans-serif;
+}
