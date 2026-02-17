@@ -29,7 +29,7 @@ function getImprovements(resume: ResumeData): string[] {
   if (summaryWords < 40)
     all.push("Expand your professional summary to at least 40 words.");
 
-  const skillsCount = resume.skills.split(",").map((s) => s.trim()).filter(Boolean).length;
+  const skillsCount = resume.skills.technical.length + resume.skills.soft.length + resume.skills.tools.length;
   if (skillsCount < 8)
     all.push("Add more skills — aim for at least 8 relevant skills.");
 

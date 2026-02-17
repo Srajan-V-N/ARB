@@ -28,8 +28,15 @@ export interface Project {
   id: string;
   name: string;
   description: string;
-  technologies: string;
-  link: string;
+  technologies: string[];
+  liveUrl: string;
+  githubUrl: string;
+}
+
+export interface Skills {
+  technical: string[];
+  soft: string[];
+  tools: string[];
 }
 
 export interface ResumeLinks {
@@ -44,7 +51,7 @@ export interface ResumeData {
   education: Education[];
   experience: Experience[];
   projects: Project[];
-  skills: string;
+  skills: Skills;
   links: ResumeLinks;
 }
 
@@ -55,7 +62,7 @@ export function createEmptyResume(): ResumeData {
     education: [],
     experience: [],
     projects: [],
-    skills: "",
+    skills: { technical: [], soft: [], tools: [] },
     links: { linkedin: "", github: "", portfolio: "" },
   };
 }

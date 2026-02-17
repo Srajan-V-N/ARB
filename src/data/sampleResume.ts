@@ -55,20 +55,25 @@ export const SAMPLE_RESUME: ResumeData = {
       name: "DevDash",
       description:
         "An open-source developer dashboard that aggregates GitHub, Jira, and Slack notifications into a single feed. Built with React, Express, and Redis. 1.2K stars on GitHub.",
-      technologies: "React, Express, Redis, WebSockets",
-      link: "https://github.com/arjunmehta/devdash",
+      technologies: ["React", "Express", "Redis", "WebSockets"],
+      liveUrl: "https://devdash.io",
+      githubUrl: "https://github.com/arjunmehta/devdash",
     },
     {
       id: "proj-2",
       name: "LintBot",
       description:
         "A GitHub Action that auto-fixes common code style issues and opens PRs with corrections. Supports JavaScript, TypeScript, and Python. Used by 200+ repositories.",
-      technologies: "TypeScript, GitHub Actions, AST Parsing",
-      link: "https://github.com/arjunmehta/lintbot",
+      technologies: ["TypeScript", "GitHub Actions", "AST Parsing"],
+      liveUrl: "",
+      githubUrl: "https://github.com/arjunmehta/lintbot",
     },
   ],
-  skills:
-    "TypeScript, React, Node.js, Next.js, PostgreSQL, Redis, Docker, AWS, GraphQL, Tailwind CSS, Git, CI/CD",
+  skills: {
+    technical: ["TypeScript", "React", "Node.js", "Next.js", "PostgreSQL", "GraphQL"],
+    soft: ["Team Leadership", "Problem Solving", "Communication"],
+    tools: ["Git", "Docker", "AWS", "Redis", "Tailwind CSS", "CI/CD"],
+  },
   links: {
     linkedin: "https://linkedin.com/in/arjunmehta",
     github: "https://github.com/arjunmehta",

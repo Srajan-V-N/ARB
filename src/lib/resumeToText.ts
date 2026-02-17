@@ -40,16 +40,22 @@ export function resumeToText(resume: ResumeData): string {
   if (projects.length > 0) {
     const blocks = projects.map((proj) => {
       let line = proj.name;
-      if (proj.technologies) line += ` — ${proj.technologies}`;
+      if (proj.technologies.length > 0) line += ` — ${proj.technologies.join(", ")}`;
       if (proj.description) line += "\n" + proj.description;
-      if (proj.link) line += "\n" + proj.link;
+      if (proj.liveUrl) line += "\n" + proj.liveUrl;
+      if (proj.githubUrl) line += "\n" + proj.githubUrl;
       return line;
     });
     sections.push("PROJECTS\n" + blocks.join("\n\n"));
   }
 
-  if (skills) {
-    sections.push("SKILLS\n" + skills);
+  const allSkills = [...skills.technical, ...skills.soft, ...skills.tools];
+  if (allSkills.length > 0) {
+    const parts: string[] = [];
+    if (skills.technical.length > 0) parts.push("Technical: " + skills.technical.join(", "));
+    if (skills.soft.length > 0) parts.push("Soft Skills: " + skills.soft.join(", "));
+    if (skills.tools.length > 0) parts.push("Tools: " + skills.tools.join(", "));
+    sections.push("SKILLS\n" + parts.join("\n"));
   }
 
   const linkLines = [links.linkedin, links.github, links.portfolio].filter(Boolean);

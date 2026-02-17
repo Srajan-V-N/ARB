@@ -25,10 +25,7 @@ export function computeAtsScore(resume: ResumeData): AtsResult {
   score += experienceScore;
 
   // Skills: scales linearly up to 8
-  const skillsCount = resume.skills
-    .split(",")
-    .map((s) => s.trim())
-    .filter(Boolean).length;
+  const skillsCount = resume.skills.technical.length + resume.skills.soft.length + resume.skills.tools.length;
   const skillsScore = Math.min(skillsCount, 8) / 8 * 10;
   score += skillsScore;
 

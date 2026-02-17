@@ -11,6 +11,7 @@ import {
   type Education,
   type Experience,
   type Project,
+  type Skills,
   type ResumeLinks,
   createEmptyResume,
 } from "@/types/resume";
@@ -24,7 +25,7 @@ const OLD_STORAGE_KEY = "arb-resume-data";
 type Action =
   | { type: "SET_PERSONAL_INFO"; payload: PersonalInfo }
   | { type: "SET_SUMMARY"; payload: string }
-  | { type: "SET_SKILLS"; payload: string }
+  | { type: "SET_SKILLS"; payload: Skills }
   | { type: "SET_LINKS"; payload: ResumeLinks }
   | { type: "ADD_EDUCATION"; payload: Education }
   | { type: "UPDATE_EDUCATION"; payload: Education }
@@ -108,17 +109,43 @@ interface ResumeContextValue {
 
 const ResumeContext = createContext<ResumeContextValue | null>(null);
 
+function migrateSkills(data: ResumeData): ResumeData {
+  const skills = data.skills as unknown;
+  if (typeof skills === "string") {
+    const parts = (skills as string).split(",").map((s) => s.trim()).filter(Boolean);
+    data.skills = { technical: parts, soft: [], tools: [] };
+  } else if (!skills || typeof skills !== "object") {
+    data.skills = { technical: [], soft: [], tools: [] };
+  }
+  // Migrate projects: string technologies → string[], link → liveUrl/githubUrl
+  if (data.projects) {
+    data.projects = data.projects.map((p) => {
+      const proj = { ...p } as Record<string, unknown>;
+      if (typeof proj.technologies === "string") {
+        proj.technologies = (proj.technologies as string).split(",").map((s) => (s as string).trim()).filter(Boolean);
+      }
+      if (!Array.isArray(proj.technologies)) {
+        proj.technologies = [];
+      }
+      if (proj.liveUrl === undefined) proj.liveUrl = (proj.link as string) || "";
+      if (proj.githubUrl === undefined) proj.githubUrl = "";
+      return proj as unknown as Project;
+    });
+  }
+  return data;
+}
+
 function loadFromStorage(): ResumeData {
   try {
     const raw = localStorage.getItem(STORAGE_KEY);
-    if (raw) return JSON.parse(raw) as ResumeData;
+    if (raw) return migrateSkills(JSON.parse(raw) as ResumeData);
 
     // One-time migration from old key
     const old = localStorage.getItem(OLD_STORAGE_KEY);
     if (old) {
       localStorage.setItem(STORAGE_KEY, old);
       localStorage.removeItem(OLD_STORAGE_KEY);
-      return JSON.parse(old) as ResumeData;
+      return migrateSkills(JSON.parse(old) as ResumeData);
     }
   } catch {
     // ignore corrupt data
