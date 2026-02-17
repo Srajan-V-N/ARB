@@ -1,3 +1,4 @@
+import React from "react";
 import { useTemplate, ACCENT_COLORS, type AccentColor } from "@/context/TemplateContext";
 import type { TemplateName } from "@/types/template";
 
@@ -58,7 +59,7 @@ function MinimalIcon() {
   );
 }
 
-const iconMap: Record<TemplateName, () => JSX.Element> = {
+const iconMap: Record<TemplateName, () => React.ReactNode> = {
   classic: ClassicIcon,
   modern: ModernIcon,
   minimal: MinimalIcon,
