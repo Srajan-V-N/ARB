@@ -19,3 +19,17 @@
   --font-serif: "Playfair Display", Georgia, serif;
   --font-sans: "Inter", system-ui, sans-serif;
 }
+
+@media print {
+  nav, .print\:hidden { display: none !important; }
+
+  body, body * { background: white !important; }
+  body { margin: 0; padding: 0.5in; }
+
+  @page { margin: 0; }
+
+  * { color: black !important; -webkit-print-color-adjust: exact; }
+
+  h2 { break-after: avoid; }
+  section, [data-section] { break-inside: avoid; }
+}

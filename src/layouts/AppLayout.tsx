@@ -11,7 +11,7 @@ export default function AppLayout() {
   const showNav = pathname !== "/";
 
   return (
-    <div className="min-h-screen bg-surface font-sans text-text-primary">
+    <div className="min-h-screen bg-surface font-sans text-text-primary print:min-h-0">
       {showNav && (
         <nav className="flex h-14 items-center justify-between border-b border-border bg-white px-6">
           <NavLink to="/" className="font-serif text-lg font-bold text-text-primary">

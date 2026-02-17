@@ -175,7 +175,7 @@ function Section({
   children: React.ReactNode;
 }) {
   return (
-    <div className={gap}>
+    <div className={gap} data-section>
       <h2 className={`${heading} ${border}`}>{title}</h2>
       {children}
     </div>
