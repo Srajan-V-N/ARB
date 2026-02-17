@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { useResume } from "@/context/ResumeContext";
-import { useTemplate } from "@/context/TemplateContext";
+import { useTemplate, ACCENT_COLORS } from "@/context/TemplateContext";
 import ResumeLayout from "@/components/resume/ResumeLayout";
 import TemplateTabs from "@/components/ui/TemplateTabs";
 import Button from "@/components/ui/Button";
@@ -9,13 +9,16 @@ import { getExportWarning } from "@/lib/exportWarning";
 
 export default function PreviewPage() {
   const { resume } = useResume();
-  const { template } = useTemplate();
+  const { template, accentColor } = useTemplate();
   const [copied, setCopied] = useState(false);
+  const [toast, setToast] = useState(false);
 
   const warning = getExportWarning(resume);
 
   function handlePrint() {
     window.print();
+    setToast(true);
+    setTimeout(() => setToast(false), 3000);
   }
 
   function handleCopy() {
@@ -44,7 +47,14 @@ export default function PreviewPage() {
           <p className="print:hidden mt-2 text-xs text-amber-600">{warning}</p>
         )}
       </div>
-      <ResumeLayout resume={resume} template={template} />
+      <ResumeLayout resume={resume} template={template} accentColor={ACCENT_COLORS[accentColor]} />
+
+      {/* Toast notification */}
+      {toast && (
+        <div className="print:hidden fixed bottom-6 right-6 rounded-lg bg-gray-900 px-4 py-3 text-sm text-white shadow-lg transition-opacity">
+          PDF export ready! Check your downloads.
+        </div>
+      )}
     </div>
   );
 }
