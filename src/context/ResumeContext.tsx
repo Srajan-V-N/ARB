@@ -16,7 +16,8 @@ import {
 } from "@/types/resume";
 import { SAMPLE_RESUME } from "@/data/sampleResume";
 
-const STORAGE_KEY = "arb-resume-data";
+const STORAGE_KEY = "resumeBuilderData";
+const OLD_STORAGE_KEY = "arb-resume-data";
 
 // --- Actions ---
 
@@ -111,6 +112,14 @@ function loadFromStorage(): ResumeData {
   try {
     const raw = localStorage.getItem(STORAGE_KEY);
     if (raw) return JSON.parse(raw) as ResumeData;
+
+    // One-time migration from old key
+    const old = localStorage.getItem(OLD_STORAGE_KEY);
+    if (old) {
+      localStorage.setItem(STORAGE_KEY, old);
+      localStorage.removeItem(OLD_STORAGE_KEY);
+      return JSON.parse(old) as ResumeData;
+    }
   } catch {
     // ignore corrupt data
   }
